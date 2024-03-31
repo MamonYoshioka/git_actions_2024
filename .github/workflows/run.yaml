@@ -1,13 +1,21 @@
-name: name-main
-on: [push]
+name: Ruby # ワークフロー名
+
+on: # テストを実行するタイミングを指定
+ push:
+   branches: [ main ]
+ pull_request:
+   branches: [ main ]
+
 jobs:
-  job-name:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "this is pen"
-      - uses: actions/checkout@v2
-      - run: |
-          ls -al
-          cd .github/workflows/
-          ls -al
+ test:
+   runs-on: ubuntu-latest # jobが実行される仮想環境を指定
+
+   steps:
+   - uses: actions/checkout@v2 # 使用するアクションを指定 "今はv2が最新"
+   - name: Set up Ruby  
+     uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+     with:
+       ruby-version: 2.6
+   - name: Hello World
+     run: echo Hello World
 
